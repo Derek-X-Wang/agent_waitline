@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
+router.use(function(req, res, next){
+    if(req.method === "GET") {
+        //open api
+        return next();
+    }
+    if(!req.isAuthenticated()) {
+        return res.redirect('/#login');
+    }
+    return next();
+});
 //api for all posts
 router.route('/posts')
 
