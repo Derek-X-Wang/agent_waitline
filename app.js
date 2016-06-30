@@ -7,7 +7,7 @@ var session =  require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// var routes = require('./routes/index');
+
 // var users = require('./routes/users');
 
 
@@ -16,6 +16,7 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/app");
 require('./models/models.js');
 
+//var index = require('./routes/index');
 var api = require('./routes/api');
 var auth = require('./routes/auth')(passport);
 
@@ -34,13 +35,18 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// entry point -- dir here
+app.use(express.static(path.join(__dirname, 'public/app')));
 app.use(passport.initialize());
 app.use(passport.session());
 
 // app.use('/', routes);
 // app.use('/users', users);
 
+// app.get('/', function(req, res){
+//     res.send('hello world');
+// });
+//app.use('/', index);
 app.use('/api', api);
 app.use('/auth', auth);
 
