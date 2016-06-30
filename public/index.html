@@ -9,24 +9,20 @@
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
   <body ng-app="App">
-    <div id='main' class="container" ng-controller="mainController">
-      <div class="col-md-offset-2 col-md-8">
-        <div class="clearfix">
-          <form ng-Submit="post()">
-            <input required type="text" class="form-control" placeholder="Your name" ng-model="newPost.created_by" />
-            <textarea required class="form-control" maxlength="200" rows="3" placeholder="Say something" ng-model="newPost.text"></textarea>
-            <input class="btn submit-btn pull-right" type="submit" value="Chirp!" />
-          </form>
-          <div id="post-stream">
-            <h4>Chirp Feed</h4>
-                <div class="post" ng-repeat="post in posts | orderBy:'created_at':true" ng-class-odd="'odd'" ng-class-even="'even'">
-                  <p>{{post.text}}</p>
-                <small>Posted by @{{post.created_by}}</small>
-                <small class="pull-right">{{post.created_at | date:"h:mma 'on' MMM d, y"}}</small>
-                </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id='main' class="container">
+			<nav class="navbar-fluid navbar-default navbar-fixed-top">
+				<div class="container">
+					<a class="navbar-brand" href="#"> Chirp! </a>
+					<p class="navbar-text"> Learn the MEAN stack by building this tiny app</p>
+					<p class="navbar-right navbar-text" ng-hide="authenticated"><a href="#/login">Login</a> or <a href="#/signup">Register</a></p>
+					<p class="navbar-right navbar-text" ng-show="authenticated"><a href="#" ng-click="signout()">Logout</a></p>
+					<p class="navbar-right navbar-text" ng-show="authenticated">Signed in as {{current_user}}</p>
+				</div>
+			</nav>
+			<div class="col-md-offset-2 col-md-8">
+				<div ng-view>
+				</div>
+			</div>
+		</div>
   </body>
 </html>

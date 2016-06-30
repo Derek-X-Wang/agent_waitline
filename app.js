@@ -51,8 +51,6 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-//Init models
-require('./models/models.js');
 //// Initialize Passport
 var initPassport = require('./passport-init');
 initPassport(passport);
