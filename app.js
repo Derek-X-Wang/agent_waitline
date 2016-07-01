@@ -29,14 +29,16 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-app.use(session({
-  secret: 'super duper secret'
-}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // entry point -- dir here
 app.use(express.static(path.join(__dirname, 'public/app')));
+// passport
+app.use(session({
+  secret: 'super duper secret'
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 

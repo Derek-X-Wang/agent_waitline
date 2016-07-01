@@ -8,33 +8,33 @@ module.exports = function(passport){
     // Passport needs to be able to serialize and deserialize users to support persistent login sessions
     passport.serializeUser(function(user, done) {
         //tell passport which id to use for user
-        console.log('serializing user:',user.username);
+        console.log('serializing user:',user.email);
         return done(null, user._id);
     });
 
     passport.deserializeUser(function(id, done) {
         //return user object back
         User.findById(id, function(err, user) {
-            console.log('deserializing user:',user.username);
+            console.log('deserializing user:',user.email);
             done(err, user);
         });
     });
 
     passport.use('login', new LocalStrategy({
-            passReqToCallback : true
+            usernameField: 'email'
         },
-        function(req, username, password, done) {
-            console.log('login user:',username);
+        function(email, password, done) {
+            console.log('login user:',email);
 
-            // check in mongo if a user with username exists or not
-            User.findOne({ 'username' :  username },
+            // check in mongo if a user with email exists or not
+            User.findOne({ 'email' :  email },
                 function(err, user) {
                     // In case of any error, return using the done method
                     if (err)
                         return done(err);
-                    // Username does not exist, log the error and redirect back
+                    // email does not exist, log the error and redirect back
                     if (!user){
-                        console.log('User Not Found with username '+username);
+                        console.log('User Not Found with email '+email);
                         return done(null, false);
                     }
                     // User exists but wrong password, log the error
@@ -52,12 +52,14 @@ module.exports = function(passport){
     ));
 
     passport.use('signup', new LocalStrategy({
+            usernameField : 'email',
+            passwordField : 'password',
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
-        function(req, username, password, done) {
-            console.log('signup user:',username);
-            // find a user in mongo with provided username
-            User.findOne({ 'username' :  username }, function(err, user) {
+        function(req, email, password, done) {
+            console.log('signup user:',email);
+            // find a user in mongo with provided email
+            User.findOne({ 'email' :  email }, function(err, user) {
                 // In case of any error, return using the done method
                 if (err){
                     console.log('Error in SignUp: '+err);
@@ -65,15 +67,18 @@ module.exports = function(passport){
                 }
                 // already exists
                 if (user) {
-                    console.log('User already exists with username: '+username);
+                    console.log('User already exists with email: '+email);
                     return done(null, false);
                 } else {
                     // if there is no user, create the user
                     var newUser = new User();
 
                     // set the user's local credentials
-                    newUser.username = username;
+                    newUser.email = email;
                     newUser.password = createHash(password);
+                    newUser.name = req.param('name');
+                    newUser.phone = req.param('phone');
+                    newUser.description = req.param('description');
 
                     // save the user
                     newUser.save(function(err) {
@@ -81,7 +86,7 @@ module.exports = function(passport){
                             console.log('Error in Saving user: '+err);
                             throw err;
                         }
-                        console.log(newUser.username + ' Registration succesful');
+                        console.log(newUser.email + ' Registration succesful');
                         return done(null, newUser);
                     });
                 }

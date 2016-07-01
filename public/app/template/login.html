@@ -1,18 +1,22 @@
 <div class="login-container">
 	<div class="login-page">
 	  <div class="form-auth" toggleauthform>
-	    <form class="register-form">
-	      <input type="text" placeholder="name"/>
-	      <input type="password" placeholder="password"/>
-	      <input type="text" placeholder="email address"/>
-				<input type="number" placeholder="phone number"/>
-				<textarea rows="5" placeholder="description"/>
+
+	    <form class="register-form" ng-submit="register()">
+				<p class="text-warning">{{error_message}}</p>
+	      <input type="text" ng-model="user.name" placeholder="name"/>
+	      <input type="password" ng-model="user.password" placeholder="password"/>
+	      <input type="email" ng-model="user.email" placeholder="email address"/>
+				<input type="text" ng-model="user.phone" placeholder="phone number"/>
+				<textarea rows="5" ng-model="user.description" placeholder="description"/>
 	      <button>create</button>
 	      <p class="message">Already registered? <a href="">Sign In</a></p>
 	    </form>
-	    <form class="login-form">
-	      <input type="text" placeholder="username"/>
-	      <input type="password" placeholder="password"/>
+
+	    <form class="login-form" ng-submit="login()">
+				<p class="text-warning">{{error_message}}</p>
+	      <input type="email" ng-model="user.email" placeholder="email address"/>
+	      <input type="password" ng-model="user.password" placeholder="password"/>
 	      <button>login</button>
 	      <p class="message">Not registered? <a href="">Create an account</a></p>
 	    </form>
