@@ -44,7 +44,7 @@
               </div>
 
               <div class="notify-btn main-menu" ng-hide="authenticated">
-                <a  href="#contact" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
+                <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
                   <span class="button-label text-left">Notify us</span>
                   <span class="arrow-wrap">
                     <span class="arrow"></span>
@@ -52,13 +52,24 @@
                 </a>
               </div>
 
-              <div class="notify-btn main-menu" ng-show="authenticated">
-                <a  href="#contact" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
-                  <span class="button-label text-left">Notify me</span>
-                  <span class="arrow-wrap">
-                    <span class="arrow"></span>
-                  </span>
-                </a>
+              <div ng-show="authenticated">
+                <div class="notify-btn main-menu" ng-show="available" ng-click="toggleAvailability()">
+                  <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
+                    <span class="button-label text-left">Available</span>
+                    <span class="arrow-wrap">
+                      <span class="arrow"></span>
+                    </span>
+                  </a>
+                </div>
+
+                <div class="notify-btn main-menu" ng-hide="available" ng-click="toggleAvailability()">
+                  <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
+                    <span class="button-label text-left">Busy</span>
+                    <span class="arrow-wrap">
+                      <span class="arrow"></span>
+                    </span>
+                  </a>
+                </div>
               </div>
             </div>
           </section>
@@ -156,12 +167,13 @@
 
             <!--Counter-->
             <div id="countdown">
-              <!-- <span class="days">00</span> -->
-              <div class="ag-ui-scroll" ui-scroll-viewport>
-                <ul>
-                  <li ui-scroll="item in datasource"  is-loading="loading">*{{item}}*</li>
-                </ul>
-              </div>
+              <div class="repeater-container" data-vs-repeat="100" vs-size-property="size">
+  							<div class="item-element" ng-repeat="agent in agentList" ng-click="showDetailDialog(agent)">
+  								<div class="name-tag">{{agent.name}}</div>
+                  <div class="phone-tag">({{agent.phone}})</div>
+                  <p class="description-tag">{{agent.description}}</p>
+  							</div>
+  						</div>
             </div>
             <span class="small-hr"></span>
             <span class="remain-days">Scroll for More</span>

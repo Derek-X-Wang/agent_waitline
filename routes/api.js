@@ -3,33 +3,39 @@ var router = express.Router();
 
 var mongoose = require('mongoose');
 var Post = mongoose.model('Post');
+var User = mongoose.model('User');
 
-router.use(isAuthenticated);
-//api for all posts
-router.route('/posts')
-
-    //creates a new post
-    .post(function(req, res){
-
-        var post = new Post();
-        post.text = req.body.text;
-        post.created_by = req.body.created_by;
-        post.save(function(err, post) {
-            if (err){
-                return res.send(500, err);
-            }
-            return res.json(post);
-        });
-    })
-    //gets all posts
+router.route('/users')
     .get(function(req, res){
-        Post.find(function(err, posts){
+      console.log("getting users");
+        User.find({ available: true }, function(err, users){
             if(err){
                 return res.send(500, err);
             }
-            return res.send(posts);
+            return res.send(users);
         });
     });
+
+router.use(isAuthenticated);
+//api for all posts
+router.route('/users/:email')
+    .post(function(req, res){
+
+        User.findOne({ 'email' :  email }, function(err, user){
+          if(err){
+              return res.send(500, err);
+          }
+          user.available = true;
+          user.save(function(err, user) {
+              if (err){
+                  return res.send(500, err);
+              }
+              console.log("toggle availability for", user.email);
+              return res.json(user);
+          });
+        });
+    });
+
 //api for a specfic post
 router.route('/posts/:id')
 

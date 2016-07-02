@@ -1,7 +1,7 @@
 @charset "UTF-8";
 /*------------------------------------------------------------------
 [Master Stylesheet]
-Project:	Pogody
+Project:	Ag
 ++++ Imports ++++
 ++++ Reset ++++
 ++++ Main ++++
@@ -204,29 +204,64 @@ p.tagline, .address-detail a.tagline {
     background: #fff; }
   .side-right .call-to-action i {
     color: #fff; }
-  .side-right .ag-ui-scroll {
-    width: 550px;
-    height: 500px;
-    display: block;
-    background-color: transparent;
+  .repeater-container{
+			height: 550px;
+			overflow: auto;
+			-webkit-overflow-scrolling: touch;
+		}
+  .item-element{
+			-webkit-transition: background-color 0.3s ease;
+			-moz-transition: background-color 0.3s ease;
+			-ms-transition: background-color 0.3s ease;
+			-o-transition: background-color 0.3s ease;
+			transition: background-color 0.3s ease;
+		}
+  .repeater-container .item-element{
+      height: 90px;
+			margin: 0 !important;
+			width: 100%;
+			box-sizing: border-box;
+			-moz-box-sizing: border-box;
+      background-color: transparent;
+		}
+  .name-tag {
+    display:inline-block;
+    font-size: 35px;
+    font-weight: bold;
+    margin-left: 20px;
+    color:#e7e7e7;
+	}
+  .phone-tag {
+    display:inline-block;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 20px;
+    color:#c9c6c6;
   }
-  .side-right .ag-ui-scroll::-webkit-scrollbar-track
+  .description-tag {
+    margin-left: 40px;
+    font-size: 15px;
+  }
+	.item-element:hover{
+		background-color: hsla(180, 100%, 50%, 0.3);
+	}
+
+  .side-right .repeater-container::-webkit-scrollbar-track
   {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(,0,0,0.3);
   	border-radius: 10px;
   	background-color: transparent;
   }
-  .side-right .ag-ui-scroll::-webkit-scrollbar
+  .side-right .repeater-container::-webkit-scrollbar
   {
   	width: 12px;
   	background-color: transparent;
   }
-
-  .side-right .ag-ui-scroll::-webkit-scrollbar-thumb
+  .side-right .repeater-container::-webkit-scrollbar-thumb
   {
   	border-radius: 10px;
   	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-  	background-color: #555;
+  	background-color: #aad1d7;
   }
 
 .align-center, .address-detail {
@@ -1122,5 +1157,9 @@ p.tagline, .address-detail a.tagline {
   h1, h3, .side-right #countdown span,
   .side-right #countdown li.seperator {
     font-size: 35px; } }
+
+/*.item-element span{
+		font-size: 30px;
+	}*/
 
 /*# sourceMappingURL=style.css.map */

@@ -7,6 +7,7 @@ var userSchema = new mongoose.Schema({
     name: String,
     phone: String,
     description: String,
+    available: Boolean,
     created_at: {type: Date, default: Date.now}
 });
 

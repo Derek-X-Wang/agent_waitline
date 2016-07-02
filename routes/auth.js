@@ -1,32 +1,6 @@
 var express = require('express');
 var router = express.Router();
 
-// router.route('/signup')
-//     .post(function(req, res){
-//       console.log("here");
-//     });
-
-    // router.post('/signup', function(req, res){
-    //       console.log("here");
-    //       console.log("req", req);
-    //       console.log("res", res);
-    //     });
-
-// router.route('/signup')
-//     .post(function(req, res){
-//
-//     });
-// router.route('/signup')
-//     .post(function(req, res){
-//
-//     });
-// router.route('/signup')
-//     .post(function(req, res){
-//
-//     });
-
-// module.exports = router;
-
 module.exports = function(passport){
 
     //sends successful login state back to angular
