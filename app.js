@@ -6,7 +6,6 @@ var passport = require('passport');
 var session =  require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var MongoStore = require('connect-mongo')(session);
 
 
 // var users = require('./routes/users');
@@ -14,7 +13,7 @@ var MongoStore = require('connect-mongo')(session);
 
 var mongoose = require('mongoose');
 //connect to mongodb
-var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||"mongodb://localhost:27017/app";
+var dbUrl = process.env.MONGODB_URI || process.env.MONGOHQ_URL ||"mongodb://localhost:27017/app";
 mongoose.connect(dbUrl, function (err, res) {
       if (err) {
       console.log ('ERROR connecting to: ' + dbUrl + '. ' + err);
@@ -43,10 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/app')));
 // passport
 app.use(session({
-  secret: 'super duper secret',
-  store: new MongoStore({
-    url: process.env.MONGOLAB_URI
-  }),
+  secret: 'super duper secret'
 }));
 app.use(passport.initialize());
 app.use(passport.session());
