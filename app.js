@@ -6,6 +6,7 @@ var passport = require('passport');
 var session =  require('express-session');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var MongoStore = require('connect-mongo')(session);
 
 
 // var users = require('./routes/users');
