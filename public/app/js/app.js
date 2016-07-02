@@ -1,15 +1,16 @@
 var agApp = angular.module('agApp', [
-    'ngRoute', 'ngResource', 'agCtrls', 'agDirectives', 'agServices'
+    'ngRoute', 'ngResource',
+    'agCtrls', 'agDirectives', 'agServices'
 ]).run(['$rootScope', '$http',function($rootScope, $http) {
 	$rootScope.authenticated = false;
-	$rootScope.current_user = '';
+	$rootScope.current_user = {};
   $rootScope.available = false;
 
 	$rootScope.signout = function(){
       console.log("signout");
     	$http.get('/auth/signout');
     	$rootScope.authenticated = false;
-    	$rootScope.current_user = '';
+    	$rootScope.current_user = {};
 	};
 }]);
 

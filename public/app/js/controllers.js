@@ -1,39 +1,51 @@
 var agCtrls = angular.module('agCtrls', [
-  'ui.scroll', 'ui.scroll.jqlite'
+  'ui.scroll', 'ui.scroll.jqlite', 'ngDialog'
 ]);
 
-agCtrls.controller('mainCtrl', ['$scope', '$rootScope', '$timeout', 'availableAgents',
-    function($scope, $rootScope, $timeout, availableAgents) {
-      $scope.toggleAvailability = function(){
-        console.log("toggle ava test");
-        $rootScope.available = !$rootScope.available;
-      };
+agCtrls.controller('mainCtrl', ['$scope', '$rootScope', '$timeout', 'availableAgents', 'ngDialog',
+    function($scope, $rootScope, $timeout, availableAgents, ngDialog) {
       $scope.agentList = [];
-
-      $scope.showDetailDialog = function(agent){
-        console.log("click detail dialog");
-      };
-      $scope.datasource = availableAgents.query(function(result) {
+      availableAgents.query(function(result) {
         //console.log(result);
         result.forEach(function(item,index,arr){
-          console.log("index", index, "item:", item);
+          //console.log("index", index, "item:", item);
           $scope.agentList.push(item);
         });
       });
-      console.log("here2");
-      //$scope.datasource = {"aaa":"ddd", "bbb":"eee","ccc":"fff"};
-      // var datasource = {};
-      // datasource.get = function (index, count, success) {
-			// 	$timeout(function () {
-			// 		var result = [];
-			// 		for (var i = index; i <= index + count - 1; i++) {
-			// 			result.push("item #" + i);
-			// 		}
-			// 		success(result);
-			// 	}, 100);
-			// };
-      //
-			// $scope.datasource = {};
+
+      $scope.toggleAvailability = function(){
+        console.log("toggle ava test");
+        $rootScope.available = !$rootScope.available;
+        // save to db
+        $scope.agent = new availableAgents();
+        $scope.agent.email = $rootScope.current_user.email;
+        $scope.agent.available = $rootScope.available;
+        availableAgents.save($scope.agent, function(){
+          console.log("availability updated in db");
+        });
+        if ($rootScope.available) {
+          $scope.agentList.push($rootScope.current_user);
+        } else {
+          var i;
+          $scope.agentList.forEach(function(item,index,arr){
+            if (item.email === $rootScope.current_user.email) {
+              i = index;
+            }
+          });
+          $scope.agentList.splice(i,1);
+        }
+      };
+
+      $scope.showDetailDialog = function(agent){
+        console.log("click detail dialog");
+        //console.log("agent:",agent);
+        $scope.agent = agent;
+        ngDialog.open({ template: 'template/agent-detail-popup.html',
+                        className: 'ngdialog-theme-default ngdialog-theme-custom',
+                        scope: $scope
+                      });
+      };
+
     }
 ]);
 
@@ -46,7 +58,7 @@ agCtrls.controller('authCtrl', ['$scope', '$http', '$rootScope', '$location',
         $http.post('/auth/login', $scope.user).success(function(data){
           if(data.state == 'success'){
             $rootScope.authenticated = true;
-            $rootScope.current_user = data.user.email;
+            $rootScope.current_user = data.user;
             $rootScope.available = data.user.available;
             $location.path('/');
           }
@@ -61,7 +73,7 @@ agCtrls.controller('authCtrl', ['$scope', '$http', '$rootScope', '$location',
         $http.post('/auth/signup', $scope.user).success(function(data){
           if(data.state == 'success'){
             $rootScope.authenticated = true;
-            $rootScope.current_user = data.user.email;
+            $rootScope.current_user = data.user;
             $rootScope.available = data.user.available;
             $location.path('/');
           }

@@ -16,24 +16,31 @@ router.route('/users')
         });
     });
 
+router.route('/users')
+    .get(function(req, res){
+      console.log("getting users");
+        User.find({ available: true }, function(err, users){
+            if(err){
+                return res.send(500, err);
+            }
+            return res.send(users);
+        });
+    });
+
 router.use(isAuthenticated);
 //api for all posts
 router.route('/users/:email')
     .post(function(req, res){
-
-        User.findOne({ 'email' :  email }, function(err, user){
+        User.findOneAndUpdate({ 'email':  req.body.email }, { 'available': req.body.available },function(err, user){
           if(err){
               return res.send(500, err);
           }
-          user.available = true;
-          user.save(function(err, user) {
-              if (err){
-                  return res.send(500, err);
-              }
-              console.log("toggle availability for", user.email);
-              return res.json(user);
-          });
+          return res.send("succesfully saved");
         });
+    })
+    .put(function(req, res){
+        // TODO implement update
+        console.log("req--:",req.body);
     });
 
 //api for a specfic post

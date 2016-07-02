@@ -45,7 +45,7 @@
 
               <div class="notify-btn main-menu" ng-hide="authenticated">
                 <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
-                  <span class="button-label text-left">Notify us</span>
+                  <span class="button-label text-left">Cheers</span>
                   <span class="arrow-wrap">
                     <span class="arrow"></span>
                   </span>
@@ -53,7 +53,7 @@
               </div>
 
               <div ng-show="authenticated">
-                <div class="notify-btn main-menu" ng-show="available" ng-click="toggleAvailability()">
+                <div class="notify-btn main-menu" ng-hide="available" ng-click="toggleAvailability()">
                   <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
                     <span class="button-label text-left">Available</span>
                     <span class="arrow-wrap">
@@ -62,7 +62,7 @@
                   </a>
                 </div>
 
-                <div class="notify-btn main-menu" ng-hide="available" ng-click="toggleAvailability()">
+                <div class="notify-btn main-menu" ng-show="available" ng-click="toggleAvailability()">
                   <a  href="" class="btn btn-default animated fadeInLeft" data-hover="Notify me" data-animation="fadeInLeft" data-animation-delay="1000" data-out-animation="fadeInLeft" data-out-animation-delay="600" data-toggle="modal" data-target="#notify-my">
                     <span class="button-label text-left">Busy</span>
                     <span class="arrow-wrap">
