@@ -1,0 +1,8 @@
+{
+  "name": "Ag Waitline",
+  "description": "demo",
+  "repository": "https://github.com/Derek-X-Wang/agent_waitline",
+  "logo": "http://node-js-sample.herokuapp.com/node.svg",
+  "keywords": ["agent", "real estate"],
+  "image": "heroku/nodejs"
+}
