@@ -13,8 +13,13 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 //connect to mongodb
-var dbUrl = process.env.MONGOLAB_URI || "mongodb://localhost:27017/app";
-mongoose.connect(dbUrl);
+var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL ||"mongodb://localhost:27017/app";
+mongoose.connect(dbUrl, function (err, res) {
+      if (err) {
+      console.log ('ERROR connecting to: ' + dbUrl + '. ' + err);
+      } else {
+      console.log ('Succeeded connected to: ' + dbUrl);
+      }});
 require('./models/models.js');
 
 var api = require('./routes/api');
