@@ -13,7 +13,8 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 //connect to mongodb
-mongoose.connect("mongodb://localhost:27017/app");
+var dbUrl = process.env.MONGOLAB_URI || "mongodb://localhost:27017/app";
+mongoose.connect(dbUrl);
 require('./models/models.js');
 
 var api = require('./routes/api');
