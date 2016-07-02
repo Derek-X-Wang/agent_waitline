@@ -16,7 +16,6 @@ var mongoose = require('mongoose');
 mongoose.connect("mongodb://localhost:27017/app");
 require('./models/models.js');
 
-//var index = require('./routes/index');
 var api = require('./routes/api');
 var auth = require('./routes/auth')(passport);
 
@@ -42,13 +41,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-// app.use('/', routes);
-// app.use('/users', users);
 
-// app.get('/', function(req, res){
-//     res.send('hello world');
-// });
-//app.use('/', index);
 app.use('/api', api);
 app.use('/auth', auth);
 

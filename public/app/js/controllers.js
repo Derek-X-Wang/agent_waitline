@@ -1,5 +1,5 @@
 var agCtrls = angular.module('agCtrls', [
-  'ui.scroll', 'ui.scroll.jqlite', 'ngDialog'
+  'ngDialog'
 ]);
 
 agCtrls.controller('mainCtrl', ['$scope', '$rootScope', '$timeout', 'availableAgents', 'ngDialog',

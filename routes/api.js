@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 var mongoose = require('mongoose');
-var Post = mongoose.model('Post');
 var User = mongoose.model('User');
 
 router.route('/users')
@@ -41,45 +40,6 @@ router.route('/users/:email')
     .put(function(req, res){
         // TODO implement update
         console.log("req--:",req.body);
-    });
-
-//api for a specfic post
-router.route('/posts/:id')
-
-    //gets specified post
-    .get(function(req, res){
-        Post.findById(req.params.id, function(err, post){
-            if(err)
-                res.send(err);
-            res.json(post);
-        });
-    })
-    //updates specified post
-    .put(function(req, res){
-        Post.findById(req.params.id, function(err, post){
-            if(err)
-                res.send(err);
-
-            post.created_by = req.body.created_by;
-            post.text = req.body.text;
-
-            post.save(function(err, post){
-                if(err)
-                    res.send(err);
-
-                res.json(post);
-            });
-        });
-    })
-    //deletes the post
-    .delete(function(req, res) {
-        Post.remove({
-            _id: req.params.id
-        }, function(err) {
-            if (err)
-                res.send(err);
-            res.json("deleted :(");
-        });
     });
 
 //Used for routes that must be authenticated.
