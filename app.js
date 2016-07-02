@@ -42,7 +42,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/app')));
 // passport
 app.use(session({
-  secret: 'super duper secret'
+  secret: 'super duper secret',
+  store: new MongoStore({
+    url: process.env.MONGOLAB_URI
+  }),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
